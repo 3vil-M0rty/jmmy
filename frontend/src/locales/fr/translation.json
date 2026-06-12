@@ -1,0 +1,30 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "users": "Utilisateurs",
+    "notFound": "Introuvable"
+  },
+  "home": {
+    "title": "Bienvenue",
+    "subtitle": "Un démarreur full-stack React + Node.js",
+    "cta": "Voir les utilisateurs"
+  },
+  "about": {
+    "title": "À propos",
+    "description": "Un démarreur prêt pour la production avec i18n, routage et une API REST."
+  },
+  "users": {
+    "title": "Utilisateurs",
+    "loading": "Chargement…",
+    "error": "Impossible de charger les utilisateurs.",
+    "name": "Nom",
+    "email": "E-mail"
+  },
+  "notFound": {
+    "title": "404 – Page introuvable",
+    "back": "Accueil"
+  },
+  "language": "Langue",
+  "footer": "Construit avec React, Vite & i18next"
+}

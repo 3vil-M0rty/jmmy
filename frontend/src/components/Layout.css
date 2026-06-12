@@ -1,0 +1,43 @@
+.header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    height: 48px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.jimmy {
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-size: 7rem;
+    z-index: 9999;
+    user-select: none;
+    cursor: pointer;
+    box-sizing: content-box;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    display: inline-block;
+    width: fit-content;
+    mix-blend-mode: difference;
+}
+
+.jimmy2 {
+    position: fixed;
+    top: 0;
+    right: 0;
+    font-size: 7rem;
+    z-index: 9999;
+    user-select: none;
+    cursor: pointer;
+    box-sizing: content-box;
+    padding: 0;
+    margin: 0;
+    color: white;
+    line-height: 1;
+    display: inline-block;
+    width: fit-content;
+}

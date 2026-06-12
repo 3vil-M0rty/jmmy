@@ -1,0 +1,33 @@
+/* CameraShutterTransition.css */
+
+.cst-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  background: transparent;
+  pointer-events: auto; /* block interaction while transitioning */
+}
+
+/* Hidden once the shutter has flown past the viewport */
+.cst-overlay[data-state='idle'] {
+  display: none;
+  pointer-events: none;
+}
+
+/* Viewport-sized, never transformed — all motion happens on the
+   inner <g> rig in viewBox space, so the browser never has to
+   rasterize an oversized layer. */
+.cst-shutter {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.cst-blade {
+  stroke: rgba(238, 255, 0, 0.06);
+  stroke-width: 2;
+}

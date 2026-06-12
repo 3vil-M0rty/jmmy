@@ -1,0 +1,30 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "users": "Usuarios",
+    "notFound": "No encontrado"
+  },
+  "home": {
+    "title": "Bienvenido",
+    "subtitle": "Un inicio full-stack React + Node.js",
+    "cta": "Ver usuarios"
+  },
+  "about": {
+    "title": "Acerca de",
+    "description": "Un inicio listo para producción con i18n, enrutamiento y una API REST."
+  },
+  "users": {
+    "title": "Usuarios",
+    "loading": "Cargando…",
+    "error": "Error al cargar usuarios.",
+    "name": "Nombre",
+    "email": "Correo"
+  },
+  "notFound": {
+    "title": "404 – Página no encontrada",
+    "back": "Ir al inicio"
+  },
+  "language": "Idioma",
+  "footer": "Construido con React, Vite & i18next"
+}

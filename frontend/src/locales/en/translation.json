@@ -1,0 +1,30 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "users": "Users",
+    "notFound": "Not Found"
+  },
+  "home": {
+    "title": "Welcome",
+    "subtitle": "A full-stack React + Node.js starter",
+    "cta": "View Users"
+  },
+  "about": {
+    "title": "About",
+    "description": "This is a production-ready starter with i18n, routing, and a REST API."
+  },
+  "users": {
+    "title": "Users",
+    "loading": "Loading…",
+    "error": "Failed to load users.",
+    "name": "Name",
+    "email": "Email"
+  },
+  "notFound": {
+    "title": "404 – Page Not Found",
+    "back": "Go Home"
+  },
+  "language": "Language",
+  "footer": "Built with React, Vite & i18next"
+}
