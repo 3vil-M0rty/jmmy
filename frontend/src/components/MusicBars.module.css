@@ -1,0 +1,55 @@
+.bars {
+    --accent: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 32px;
+    padding: 4px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.bars:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+.bar {
+    width: 2px;
+    height: 100%;
+    border-radius: 2px;
+    background: var(--accent);
+    transform: scaleY(0.25);          /* short + still when stopped */
+    transform-origin: center;
+    transition: transform 0.3s ease;
+}
+
+/* Bounce only while playing */
+.bars[data-playing="true"] .bar {
+    animation: bounce 0.9s ease-in-out infinite;
+}
+
+/* Stagger each bar so they don't move in unison */
+.bars[data-playing="true"] .bar:nth-child(1) { animation-delay: -0.20s; }
+.bars[data-playing="true"] .bar:nth-child(2) { animation-delay: -0.55s; }
+.bars[data-playing="true"] .bar:nth-child(3) { animation-delay: -0.05s; }
+.bars[data-playing="true"] .bar:nth-child(4) { animation-delay: -0.40s; }
+.bars[data-playing="true"] .bar:nth-child(5) { animation-delay: -0.30s; }
+
+@keyframes bounce {
+    0%, 100% { transform: scaleY(0.25); }
+    50%      { transform: scaleY(1); }
+}
+
+/* Respect reduced motion: no bounce, just a static set of bars */
+@media (prefers-reduced-motion: reduce) {
+    .bars[data-playing="true"] .bar {
+        animation: none;
+        transform: scaleY(0.6);
+    }
+}

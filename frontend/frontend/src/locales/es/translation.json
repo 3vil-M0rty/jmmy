@@ -1,0 +1,74 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "users": "Usuarios",
+    "notFound": "No encontrado",
+    "primary": "Navegación principal"
+  },
+  "common": {
+    "loading": "Cargando…"
+  },
+  "home": {
+    "eyebrow": "Colectivo Cultural",
+    "title": "Jimmy",
+    "subtitle": "DJs, calle, bandas en vivo, moda y comida — una experiencia inmersiva.",
+    "cta": "Ver usuarios",
+    "section1Title": "Una noche, todas las escenas.",
+    "section1Body": "Desde sesiones de DJ en sótanos hasta escenarios en vivo repletos, Jimmy reúne las subculturas de la ciudad en una sola sala. Desplázate por los mundos entre los que nos movemos.",
+    "section2Title": "Construido en torno a la gente.",
+    "section2Body": "Estilo de calle, cocinas y pistas de baile — el colectivo es el público. Explora la galería para sentir la imagen completa."
+  },
+  "about": {
+    "title": "Acerca de",
+    "description": "Un colectivo cultural que reúne DJs, vida callejera, bandas en vivo, moda y comida.",
+    "galleryLabel": "Galería de imágenes inmersiva",
+    "categories": {
+      "djs": "DJs",
+      "streets": "Calle",
+      "bands": "Bandas en Vivo",
+      "fashion": "Moda",
+      "food": "Comida"
+    },
+    "alt": {
+      "djs": "Un DJ actuando ante el público",
+      "streets": "Cultura callejera y vida urbana",
+      "bands": "Una banda tocando en el escenario",
+      "fashion": "Moda y estilo callejero",
+      "food": "Cultura gastronómica y comida"
+    }
+  },
+  "users": {
+    "title": "Usuarios",
+    "loading": "Cargando…",
+    "error": "Error al cargar usuarios.",
+    "name": "Nombre",
+    "email": "Correo"
+  },
+  "notFound": {
+    "title": "404 – Página no encontrada",
+    "back": "Ir al inicio"
+  },
+  "language": "Idioma",
+  "footer": "Construido con React, Vite & i18next",
+  "seo": {
+    "siteName": "Jimmy",
+    "defaultDescription": "DJs, calle, bandas en vivo, moda y comida — un colectivo cultural inmersivo.",
+    "home": {
+      "title": "Inicio",
+      "description": "Jimmy reúne DJs, vida callejera, bandas en vivo, moda y comida en una experiencia inmersiva."
+    },
+    "about": {
+      "title": "Acerca de",
+      "description": "Recorre una galería inmersiva de DJs, calle, bandas en vivo, moda y comida."
+    },
+    "users": {
+      "title": "Usuarios",
+      "description": "Conoce a las personas detrás del colectivo Jimmy."
+    },
+    "notFound": {
+      "title": "Página no encontrada",
+      "description": "La página que buscas no existe."
+    }
+  }
+}

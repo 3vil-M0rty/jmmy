@@ -1,0 +1,88 @@
+.wrapper {
+    --black: #000;
+    --white: #fff;
+    --red: #EE2625;
+
+    position: relative;
+    height: 100svh;
+    overflow: hidden;
+    background: var(--black);
+    color: var(--white);
+
+    /* We own all gestures — stop the browser from also scrolling/zooming. */
+    touch-action: none;
+    overscroll-behavior: none;
+    outline: none;
+}
+
+/* Each slide is absolutely stacked; the engine drives translateY per frame. */
+.hero {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100svh;
+    overflow: hidden;
+    /* Isolate paint so off-screen slides cost nothing. */
+    contain: strict;
+    backface-visibility: hidden;
+}
+
+/* Image is over-scanned (taller than the slide) so parallax drift
+   never exposes the black background at the top or bottom edge. */
+.heroImage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -16%;
+    height: 132%;
+    z-index: -1;
+    background: var(--black);
+    backface-visibility: hidden;
+}
+
+.heroImage img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* SVG Text Marquee */
+.marquee {
+    width: 90vw;
+    max-width: none;
+    height: auto;
+    overflow: visible;
+    pointer-events: none;
+    mix-blend-mode: exclusion;
+    transform-origin: center center;
+}
+
+.marquee text {
+    fill: var(--white);
+    font-size: 120px;
+    font-family: "Druk Trial", "Inter Tight", sans-serif;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    mix-blend-mode: difference;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .wrapper {
+        scroll-behavior: auto;
+    }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+    .marquee {
+        width: 92vw;
+    }
+    .marquee text {
+        font-size: 150px;
+    }
+}

@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTransition } from './TransitionContext';
 import Lenis from "lenis";
 import Snap from "lenis/snap";
 import styles from "./ParallaxScroll.module.css";
@@ -8,7 +9,7 @@ import styles from "./ParallaxScroll.module.css";
 gsap.registerPlugin(ScrollTrigger);
 
 /* SVG text marquee — one per hero, scale-animated on scroll */
-function Marquee({ label }) {
+function Marquee({ label, onClick }) {
     return (
         <svg
             className={styles.marquee}
@@ -16,6 +17,7 @@ function Marquee({ label }) {
             preserveAspectRatio="xMidYMid meet"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
+            onClick={onClick}
         >
             <text
                 x="50%"
@@ -166,7 +168,7 @@ export default function ParallaxScroll({ items }) {
         ...items.map((item, i) => ({ item, key: `s-${i}`, clone: false })),
         { item: items[0], key: "clone-first", clone: true },
     ];
-
+    const { navigateTo } = useTransition();
     return (
         <div ref={wrapperRef} className={styles.wrapper}>
             <div ref={contentRef} className={styles.content}>
@@ -179,9 +181,9 @@ export default function ParallaxScroll({ items }) {
                         aria-hidden={clone || undefined}
                     >
                         <picture className={styles.heroImage}>
-                            <img src={item.image} alt={clone ? "" : item.alt ?? ""} />
+                            <img src={item.image} loading="lazy" decoding="async" alt={clone ? "" : item.alt ?? ""} />
                         </picture>
-                        <Marquee label={item.label ?? "SCROLL"} />
+                        <Marquee label={item.label ?? "SCROLL"} onClick={() => navigateTo(item.path)} />
                     </section>
                 ))}
 

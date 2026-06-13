@@ -1,0 +1,74 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "users": "Users",
+    "notFound": "Not Found",
+    "primary": "Primary navigation"
+  },
+  "common": {
+    "loading": "Loading…"
+  },
+  "home": {
+    "eyebrow": "Culture Collective",
+    "title": "Jimmy",
+    "subtitle": "DJs, streets, live bands, fashion and food — one immersive experience.",
+    "cta": "View Users",
+    "section1Title": "One night, every scene.",
+    "section1Body": "From basement DJ sets to packed live stages, Jimmy pulls the city's subcultures into a single room. Scroll through the worlds we move between.",
+    "section2Title": "Built around the people.",
+    "section2Body": "Street style, kitchens and dancefloors — the collective is the crowd. Explore the gallery to feel the full picture."
+  },
+  "about": {
+    "title": "About",
+    "description": "A culture collective bringing DJs, street life, live bands, fashion and food together.",
+    "galleryLabel": "Immersive image gallery",
+    "categories": {
+      "djs": "DJs",
+      "streets": "Streets",
+      "bands": "Live Bands",
+      "fashion": "Fashion",
+      "food": "Food"
+    },
+    "alt": {
+      "djs": "A DJ performing to a crowd",
+      "streets": "Street culture and city life",
+      "bands": "A live band performing on stage",
+      "fashion": "Fashion and street style",
+      "food": "Food and dining culture"
+    }
+  },
+  "users": {
+    "title": "Users",
+    "loading": "Loading…",
+    "error": "Failed to load users.",
+    "name": "Name",
+    "email": "Email"
+  },
+  "notFound": {
+    "title": "404 – Page Not Found",
+    "back": "Go Home"
+  },
+  "language": "Language",
+  "footer": "Built with React, Vite & i18next",
+  "seo": {
+    "siteName": "Jimmy",
+    "defaultDescription": "DJs, streets, live bands, fashion and food — one immersive culture collective.",
+    "home": {
+      "title": "Home",
+      "description": "Jimmy brings DJs, street life, live bands, fashion and food into one immersive experience."
+    },
+    "about": {
+      "title": "About",
+      "description": "Scroll an immersive gallery of DJs, streets, live bands, fashion and food."
+    },
+    "users": {
+      "title": "Users",
+      "description": "Browse the people behind the Jimmy collective."
+    },
+    "notFound": {
+      "title": "Page Not Found",
+      "description": "The page you're looking for doesn't exist."
+    }
+  }
+}

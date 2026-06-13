@@ -5,25 +5,72 @@
 .landing {
     position: sticky;
     top: 0;
-
     height: 100vh;
     overflow: hidden;
+    display: grid;
+    place-items: center;
 }
 
 .bg {
     position: absolute;
     inset: -10%;
-
     background: url('/images/background.webp') center/cover no-repeat;
-    filter: brightness(.4) blur(5px) ;
-
+    filter: brightness(.4) blur(5px);
     will-change: transform;
+}
+
+.hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 1.5rem;
+    max-width: 60rem;
+}
+
+.eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #EE2625;
+    margin-bottom: 1.2rem;
+}
+
+.title {
+    font-family: var(--bodoni-moda);
+    font-size: clamp(3rem, 12vw, 9rem);
+    line-height: 0.95;
+    font-weight: 700;
+}
+
+.subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2.2vw, 1.4rem);
+    color: rgba(255, 255, 255, 0.75);
+    margin-top: 1.4rem;
 }
 
 .next {
     position: relative;
     z-index: 2;
-
-    min-height: 200vh;
+    min-height: 100vh;
     background: rgb(0, 0, 0);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.2rem;
+    padding: 6rem clamp(1.5rem, 8vw, 10rem);
+}
+
+.sectionTitle {
+    font-family: var(--bodoni-moda);
+    font-size: clamp(2rem, 6vw, 4rem);
+    line-height: 1;
+}
+
+.sectionBody {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 48rem;
 }

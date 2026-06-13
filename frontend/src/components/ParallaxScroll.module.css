@@ -53,9 +53,12 @@
     height: auto;
     overflow: visible;
     will-change: transform;
-    pointer-events: none;
-    
-    mix-blend-mode: difference;
+    mix-blend-mode: exclusion;
+    cursor: pointer;
+}
+
+.marquee:hover {
+    mix-blend-mode: none;
 }
 
 .marquee text {
@@ -66,6 +69,11 @@
     letter-spacing: 0.02em;
     text-transform: uppercase;
     mix-blend-mode: difference;
+    pointer-events: none;
+}
+
+.marquee text:hover {
+    mix-blend-mode: none;
 }
 
 /* Header / Footer */
@@ -117,6 +125,7 @@
 
 /* Mobile Styling */
 @media (max-width: 700px) {
+
     .header,
     .footer {
         flex-direction: column;

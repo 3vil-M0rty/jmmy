@@ -1,0 +1,108 @@
+.player {
+    --accent: #EE2625;
+    --bar-w: 4px;
+    --bar-gap: 4px;
+    --bar-h: 40px;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 18px;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    backdrop-filter: blur(8px);
+    color: #fff;
+    font-family: "Inter Tight", sans-serif;
+}
+
+/* Play / pause toggle */
+.toggle {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #fff;
+    color: #000;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.toggle:hover:not(:disabled) {
+    transform: scale(1.06);
+}
+
+.toggle:active:not(:disabled) {
+    transform: scale(0.94);
+}
+
+.toggle:disabled {
+    opacity: 0.4;
+    cursor: progress;
+}
+
+.toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.player[data-playing="true"] .toggle {
+    background: var(--accent);
+    color: #fff;
+}
+
+.toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    display: block;
+}
+
+/* Equalizer bars */
+.bars {
+    display: flex;
+    align-items: center;
+    gap: var(--bar-gap);
+    height: var(--bar-h);
+}
+
+.bar {
+    width: var(--bar-w);
+    height: var(--bar-h);
+    border-radius: 2px;
+    background: linear-gradient(to top, var(--accent), #fff);
+    transform: scaleY(0.06);            /* JS drives this */
+    transform-origin: bottom center;
+    will-change: transform;
+}
+
+/* When idle, dim the bars a touch */
+.player[data-playing="false"] .bar {
+    opacity: 0.65;
+}
+
+.title {
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.85);
+    white-space: nowrap;
+}
+
+/* Reduced motion: keep a static, readable baseline (no animation loop runs) */
+@media (prefers-reduced-motion: reduce) {
+    .bar {
+        transform: scaleY(0.4);
+        will-change: auto;
+    }
+}
+
+@media (max-width: 700px) {
+    .player {
+        gap: 12px;
+        padding: 10px 14px;
+    }
+    .title {
+        display: none;
+    }
+}

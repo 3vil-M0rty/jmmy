@@ -2,13 +2,14 @@
    CSS RESET
    ========================= */
 
+/* Fonts are loaded via a preconnected <link> in index.html (faster than @import). */
 
-   
 :root {
   --background-color: rgb(0, 0, 0);
   --text-color: white;
   --muted-text: gray;
-
+  --bodoni-moda: "Bodoni Moda SC", serif;
+  --font-body: "Inter Tight", sans-serif;
 
 }
 
@@ -29,10 +30,10 @@
 html {
   /* Prevent layout shift when scrollbar appears */
 
-  
+
   /* Smooth scrolling */
   scroll-behavior: smooth;
-   scrollbar-width: none;
+  scrollbar-width: none;
   /* Better text rendering */
   -webkit-text-size-adjust: 100%;
 }
@@ -89,5 +90,5 @@ table {
 }
 
 ::-webkit-scrollbar {
-    display: none;
+  display: none;
 }

@@ -239,14 +239,14 @@ const CameraShutterTransition = forwardRef(function CameraShutterTransition(
       >
         <defs>
           <linearGradient id="cst-blade-grad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#2b2e34" />
-            <stop offset="55%" stopColor="#1a1c20" />
-            <stop offset="100%" stopColor="#101114" />
+            <stop offset="0%" stopColor="#000000" />
+            <stop offset="55%" stopColor="#000000" />
+            <stop offset="100%" stopColor="#000000" />
           </linearGradient>
           <linearGradient id="cst-barrel-grad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#3c4047" />
-            <stop offset="45%" stopColor="#22252a" />
-            <stop offset="100%" stopColor="#0e0f12" />
+            <stop offset="0%" stopColor="#000000" />
+            <stop offset="45%" stopColor="#000000" />
+            <stop offset="100%" stopColor="#000000" />
           </linearGradient>
           <clipPath id="cst-hole-clip">
             <circle cx={CX} cy={CY} r={CLIP_R} />
@@ -256,7 +256,7 @@ const CameraShutterTransition = forwardRef(function CameraShutterTransition(
         {/* Everything lives in the rig; GSAP scales/rotates this group */}
         <g ref={rigRef}>
           {/* Dark plane covering the page, hole punched for the lens */}
-          <path d={SURROUND_PATH} fill="#0a0b0d" fillRule="evenodd" />
+          <path d={SURROUND_PATH} fill="#000000" fillRule="evenodd" />
 
           {/* Iris blades, clipped to the aperture */}
           <g clipPath="url(#cst-hole-clip)">
@@ -275,7 +275,7 @@ const CameraShutterTransition = forwardRef(function CameraShutterTransition(
               cy={CY}
               r={HOLE_R - 5}
               fill="none"
-              stroke="rgba(0,0,0,0.45)"
+              stroke="rgba(0, 0, 0, 1)"
               strokeWidth="12"
             />
           </g>
@@ -294,7 +294,7 @@ const CameraShutterTransition = forwardRef(function CameraShutterTransition(
             cy={CY}
             r={170}
             fill="none"
-            stroke="#41454d"
+            stroke="#000000"
             strokeWidth="2.5"
           />
           <circle
@@ -302,13 +302,13 @@ const CameraShutterTransition = forwardRef(function CameraShutterTransition(
             cy={CY}
             r={196.5}
             fill="none"
-            stroke="#16181b"
+            stroke="#000000"
             strokeWidth="3"
           />
 
           {/* Focus-ring ticks */}
           <g
-            stroke="rgba(255,255,255,0.10)"
+            stroke="rgba(0, 0, 0, 1)"
             strokeWidth="2"
             strokeLinecap="round"
           >

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import Seo from '../components/Seo';
 
 export default function UsersPage() {
   const { t } = useTranslation();
@@ -18,6 +19,7 @@ export default function UsersPage() {
 
   return (
     <section className="page">
+      <Seo titleKey="seo.users.title" descriptionKey="seo.users.description" />
       <h1>{t('users.title')}</h1>
 
       {status === 'loading' && <p className="status">{t('users.loading')}</p>}

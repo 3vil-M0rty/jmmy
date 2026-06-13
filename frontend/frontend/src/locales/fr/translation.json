@@ -1,0 +1,74 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "users": "Utilisateurs",
+    "notFound": "Introuvable",
+    "primary": "Navigation principale"
+  },
+  "common": {
+    "loading": "Chargement…"
+  },
+  "home": {
+    "eyebrow": "Collectif Culturel",
+    "title": "Jimmy",
+    "subtitle": "DJs, rue, groupes live, mode et cuisine — une expérience immersive.",
+    "cta": "Voir les utilisateurs",
+    "section1Title": "Une nuit, toutes les scènes.",
+    "section1Body": "Des sets de DJ en sous-sol aux scènes live bondées, Jimmy réunit les sous-cultures de la ville dans une même salle. Faites défiler les univers que nous traversons.",
+    "section2Title": "Construit autour des gens.",
+    "section2Body": "Style de rue, cuisines et pistes de danse — le collectif, c'est la foule. Explorez la galerie pour ressentir l'ensemble."
+  },
+  "about": {
+    "title": "À propos",
+    "description": "Un collectif culturel qui réunit DJs, vie de rue, groupes live, mode et cuisine.",
+    "galleryLabel": "Galerie d'images immersive",
+    "categories": {
+      "djs": "DJs",
+      "streets": "Rue",
+      "bands": "Groupes Live",
+      "fashion": "Mode",
+      "food": "Cuisine"
+    },
+    "alt": {
+      "djs": "Un DJ se produisant devant une foule",
+      "streets": "Culture de rue et vie urbaine",
+      "bands": "Un groupe en concert sur scène",
+      "fashion": "Mode et style de rue",
+      "food": "Culture culinaire et gastronomie"
+    }
+  },
+  "users": {
+    "title": "Utilisateurs",
+    "loading": "Chargement…",
+    "error": "Impossible de charger les utilisateurs.",
+    "name": "Nom",
+    "email": "E-mail"
+  },
+  "notFound": {
+    "title": "404 – Page introuvable",
+    "back": "Accueil"
+  },
+  "language": "Langue",
+  "footer": "Construit avec React, Vite & i18next",
+  "seo": {
+    "siteName": "Jimmy",
+    "defaultDescription": "DJs, rue, groupes live, mode et cuisine — un collectif culturel immersif.",
+    "home": {
+      "title": "Accueil",
+      "description": "Jimmy réunit DJs, vie de rue, groupes live, mode et cuisine dans une expérience immersive."
+    },
+    "about": {
+      "title": "À propos",
+      "description": "Parcourez une galerie immersive de DJs, rue, groupes live, mode et cuisine."
+    },
+    "users": {
+      "title": "Utilisateurs",
+      "description": "Découvrez les personnes derrière le collectif Jimmy."
+    },
+    "notFound": {
+      "title": "Page introuvable",
+      "description": "La page que vous recherchez n'existe pas."
+    }
+  }
+}
