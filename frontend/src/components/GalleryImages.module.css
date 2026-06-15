@@ -1,0 +1,334 @@
+/* If your bundler complains about @import inside a CSS module, move this line
+   to a global stylesheet instead. */
+@import url("https://fonts.cdnfonts.com/css/thegoodmonolith");
+
+.galleryRoot {
+  --gi-color-text: #fff;
+  --gi-color-bg: #000;
+  --gi-thumb-width: 120px;
+  --gi-line-base-height: 15px;
+
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh; /* better mobile behaviour */
+  margin: 0;
+  overflow: hidden;
+  color: var(--gi-color-text);
+  background-color: var(--gi-color-bg);
+  font-family: "TheGoodMonolith", monospace, sans-serif;
+}
+
+.galleryRoot *,
+.galleryRoot *::after,
+.galleryRoot *::before {
+  box-sizing: border-box;
+}
+
+/* ----------------------------------------------------------------- slides */
+.slides {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 100%;
+  place-items: center;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  grid-area: 1 / 1 / -1 / -1;
+  pointer-events: none;
+  opacity: 0;
+  overflow: hidden;
+  position: relative;
+  display: grid;
+  place-items: center;
+  will-change: transform, opacity;
+}
+
+.slideCurrent {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+/* blurred fill behind portrait / non-matching aspect ratios */
+.slideBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(40px) brightness(0.55);
+  transform: scale(1.15);
+  z-index: 0;
+}
+
+/* the actual image, fully visible (contained) over the blurred fill */
+.slideImg {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  will-change: transform, opacity, filter;
+}
+
+/* ------------------------------------------------------------- scroll hint */
+.scrollHint {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  color: #fff;
+  z-index: 100;
+  font-size: 1rem;
+}
+
+/* --------------------------------------------------------- bottom UI shell */
+.bottomUiContainer {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 720px;
+  max-width: 100%;
+  z-index: 100;
+  padding: 0 16px 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.slideSection {
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+  opacity: 0.9;
+  letter-spacing: 1px;
+  margin-bottom: 36px;
+}
+
+.slideCounter {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  color: #fff;
+  font-size: 0.825rem;
+  margin-bottom: 24px;
+}
+
+.counterDisplay {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.counterNav {
+  width: 20px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+  user-select: none;
+}
+
+.counterNav:hover {
+  opacity: 1;
+}
+
+.counterDivider {
+  opacity: 0.6;
+  font-size: 0.8rem;
+}
+
+/* ----------------------------------------------------------- title / desc */
+.slideTitleContainer {
+  width: 100%;
+  text-align: center;
+  height: 30px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.slideTitle {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  color: #fff;
+  font-size: 1.2rem;
+  opacity: 0.8;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.slideDescContainer {
+  width: 100%;
+  text-align: center;
+  height: 22px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.slideDesc {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  padding: 0 8px;
+  color: #fff;
+  font-size: 0.85rem;
+  opacity: 0.55;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.exitUp {
+  transform: translateY(-30px);
+  opacity: 0;
+}
+
+.enterUp {
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+/* --------------------------------------------------------- drag indicator */
+.dragIndicator {
+  width: 100%;
+  height: 50px;
+  pointer-events: none;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.linesContainer {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.dragLine {
+  width: 2px;
+  background-color: rgba(255, 255, 255, 0.3);
+  height: var(--gi-line-base-height);
+  transform-origin: bottom center;
+  transition: height 0.6s cubic-bezier(0.25, 0.1, 0.25, 1),
+    background-color 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* -------------------------------------------------------------- thumbnails */
+.thumbsContainer {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.slideThumbs {
+  display: flex;
+  position: relative;
+  background: transparent;
+  padding: 0;
+  z-index: 11;
+  gap: 0;
+}
+
+.slideThumb {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: var(--gi-thumb-width);
+  height: 80px;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  margin: 0;
+  position: relative;
+  z-index: 12;
+}
+
+.slideThumb:hover {
+  opacity: 0.8;
+}
+
+.active {
+  opacity: 1;
+  transform: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+/* ---------------------------------------------------------- responsiveness */
+@media (max-width: 768px) {
+  .scrollHint {
+    top: 1.25rem;
+    right: 1.25rem;
+    font-size: 0.85rem;
+  }
+
+  .slideSection {
+    font-size: 1.3rem;
+    margin-bottom: 24px;
+  }
+
+  .slideTitle {
+    font-size: 1.05rem;
+  }
+
+  .slideThumb {
+    height: 64px;
+  }
+
+  .dragIndicator {
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bottomUiContainer {
+    padding: 0 12px 1.25rem;
+  }
+
+  .slideSection {
+    font-size: 1.1rem;
+    margin-bottom: 18px;
+  }
+
+  .slideCounter {
+    margin-bottom: 16px;
+  }
+
+  .slideTitle {
+    font-size: 0.95rem;
+  }
+
+  .slideDesc {
+    font-size: 0.75rem;
+  }
+
+  .slideThumb {
+    height: 52px;
+  }
+
+  .dragIndicator {
+    height: 32px;
+    margin-bottom: 6px;
+  }
+}

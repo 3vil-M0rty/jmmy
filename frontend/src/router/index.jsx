@@ -6,6 +6,7 @@ import WorkPage from '../pages/WorkPage.jsx';
 import Djs from "../pages/work/Djs.jsx"
 import UsersPage from '../pages/UsersPage.jsx';
 import NotFoundPage from '../pages/NotFoundPage.jsx';
+import DjPage from '../pages/work/djs/DjPage.jsx';
 
 const router = createBrowserRouter([
   
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       { index: true,   element: <HomePage />    },
       { path: 'work', element: <WorkPage />   },
       { path: 'work/djs', element: <Djs />   },
+      { path: 'work/djs/:slug', element: <DjPage /> },
       { path: 'users', element: <UsersPage />   },
       { path: '*',     element: <NotFoundPage /> },
     ],

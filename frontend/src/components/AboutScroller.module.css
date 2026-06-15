@@ -1,0 +1,161 @@
+/* Global reset / font — scoped intentionally to html/body only. */
+:global(html),
+:global(body) {
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", sans-serif;
+}
+
+/* ------------------------------------------------------------------ */
+/* Fixed background + framed viewport                                  */
+/* ------------------------------------------------------------------ */
+.fixedBg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+}
+
+/* The rounded "window" the camera looks through. */
+.frame {
+  position: absolute;
+  top: 5%;
+  left: 25%;
+  width: 50%;
+  height: 90%;
+  border-radius: 2.5vh;
+  overflow: hidden;
+}
+
+/* Phones / tall screens: widen the frame (aspect-ratio <= 1.5). */
+@media (max-aspect-ratio: 3/2) {
+  .frame {
+    left: 9%;
+    width: 82%;
+  }
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* The two camera groups — GSAP owns their transforms. */
+.povScale,
+.povPan {
+  will-change: transform;
+}
+
+/* ------------------------------------------------------------------ */
+/* Scenes (responsive <img> inside foreignObject) + cross-fade         */
+/* ------------------------------------------------------------------ */
+.scene {
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.sceneActive {
+  opacity: 1;
+}
+
+.sceneInner {
+  width: 100%;
+  height: 100%;
+}
+
+.sceneImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ------------------------------------------------------------------ */
+/* Invisible camera rails                                              */
+/* ------------------------------------------------------------------ */
+.focalPoint {
+  fill: none;
+}
+
+.motionPaths path {
+  fill: none;
+  stroke: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Caption — sits above the frame, never blocks scroll                 */
+/* ------------------------------------------------------------------ */
+.caption {
+  position: absolute;
+  left: 50%;
+  bottom: 9%;
+  transform: translateX(-50%);
+  z-index: 2;
+  width: 100%;
+  padding: 0 1.25rem;
+  text-align: center;
+  pointer-events: none;
+}
+
+.captionText {
+  display: inline-block;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: clamp(1.6rem, 5vw, 4.5rem);
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.6);
+  animation: captionIn 0.6s ease both;
+}
+
+@keyframes captionIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Lift the caption a little on phones so it clears the wider frame. */
+@media (max-aspect-ratio: 3/2) {
+  .caption {
+    bottom: 12%;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Scroll track                                                        */
+/* ------------------------------------------------------------------ */
+.scroller {
+  position: relative;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  overscroll-behavior: none;
+  z-index: 1;
+}
+
+.section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  scroll-snap-align: center;
+}
+
+/* Respect reduced-motion: drop the snap so the page stays usable. */
+@media (prefers-reduced-motion: reduce) {
+  .scroller {
+    scroll-snap-type: none;
+  }
+  .captionText {
+    animation: none;
+  }
+}

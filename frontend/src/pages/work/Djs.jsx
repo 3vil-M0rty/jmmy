@@ -16,6 +16,7 @@ export default function DjsPage() {
             key: "agoria",
             publicId: "agoria",
             catKey: "agoria",
+            path: 'work/djs/agoria'
         },
         {
             key: "amor",
@@ -92,7 +93,7 @@ export default function DjsPage() {
             publicId: "vanco",
             catKey: "vanco",
         },
-    ].map(({ key, publicId, catKey }) => ({
+    ].map(({ key, publicId, catKey, path }) => ({
         key,
         image: cloudinary(publicId, 1440),
         srcSet: `
@@ -102,6 +103,7 @@ export default function DjsPage() {
         `,
         sizes: "100vw",
         label: catKey,
+        path: `/work/djs/${key}`,
         alt: t("about.alt.djs"),
     }));
 
