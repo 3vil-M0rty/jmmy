@@ -16,7 +16,7 @@ export default function WorkPage() {
 
     // Add as many slides as you like — the scroller stays smooth and seamless.
     const items = [
-        { key: "djs", base: "/images/djs/wildchild", path: 'work/djs', catKey: "djs" },
+        { key: "djs", base: "/images/djs/sarah", path: 'work/djs', catKey: "djs" },
         { key: "streets", base: "/images/streets/street2", catKey: "streets" },
         { key: "bands", base: "/images/bands/sabo", catKey: "bands" },
         { key: "fashion", base: "/images/fashion/fashion", catKey: "fashion" },
