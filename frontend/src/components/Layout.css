@@ -32,7 +32,7 @@
 .nav .nav-link {
     position: relative;
     display: inline-block;
-    color: #fff;
+    color: #000000;
     line-height: 1;
     mix-blend-mode: difference;
     padding-bottom: 3px;

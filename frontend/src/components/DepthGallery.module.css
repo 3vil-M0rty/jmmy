@@ -1,0 +1,167 @@
+/* DepthGallery.module.css
+   All styles are scoped to the component container. The label overlay is
+   positioned relative to the gallery (not the viewport), so it works inside
+   any layout without a header/footer. */
+
+.root {
+  --ui-font:
+    'IBM Plex Mono', 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+  --ui-tracking: 0.08em;
+
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: auto;
+  touch-action: none;
+  z-index: 0;
+}
+
+/* ---- Label overlay ------------------------------------------------ */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 260ms ease;
+  color: rgba(244, 244, 244, 0.92);
+  font-family: var(--ui-font);
+}
+
+.left {
+  position: absolute;
+  left: clamp(2.5rem, 8vw, 12rem);
+  top: 50%;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.index {
+  margin: 0;
+  font-size: 9px;
+  opacity: 1;
+  text-transform: uppercase;
+  letter-spacing: var(--ui-tracking);
+}
+
+.chip {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
+.right {
+  position: absolute;
+  right: clamp(2.5rem, 7vw, 10rem);
+  top: 50%;
+}
+
+.card {
+  width: min(28vw, 360px);
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  pointer-events: none;
+  opacity: 1;
+  color: inherit;
+  font-family: var(--ui-font);
+  text-transform: uppercase;
+  letter-spacing: var(--ui-tracking);
+  line-height: 1.15;
+}
+
+.word {
+  margin: 0;
+  font-size: clamp(9px, 0.78vw, 11px);
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: var(--ui-tracking);
+}
+
+.specs {
+  margin: 0;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.row {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.row dt,
+.row dd {
+  margin: 0;
+}
+
+.row dt {
+  font-size: 9px;
+  opacity: 1;
+}
+
+.value {
+  font-size: clamp(9px, 0.72vw, 11px);
+  opacity: 1;
+}
+
+/* ---- Mobile ------------------------------------------------------- */
+@media (max-width: 53em) {
+  .overlay {
+    inset: auto 0 1.5rem 0;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+    align-items: start;
+    column-gap: 1.5rem;
+    row-gap: 0.55rem;
+    padding: 0 1rem;
+  }
+
+  .left {
+    position: static;
+    transform: none;
+    gap: 0.5rem;
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .right {
+    position: static;
+    transform: none;
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .card {
+    width: auto;
+    max-width: min(58vw, 270px);
+  }
+
+  .word {
+    font-size: 10px;
+  }
+
+  .row {
+    grid-template-columns: 2.8rem 1fr;
+    gap: 0.6rem;
+  }
+
+  .value {
+    font-size: 9px;
+  }
+}
