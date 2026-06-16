@@ -21,7 +21,7 @@ export function TransitionProvider({ children }) {
 
   return (
     <TransitionContext.Provider value={{ navigateTo }}>
-      <CameraShutterTransition ref={shutterRef} speed={1.7} />
+      {/* <CameraShutterTransition ref={shutterRef} speed={1.7} /> */}
       {children}
     </TransitionContext.Provider>
   );

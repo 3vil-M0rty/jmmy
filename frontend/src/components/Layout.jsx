@@ -3,12 +3,13 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTransition } from './TransitionContext';
 import './Layout.css';
+import JellyCursor from './JellyCursor';
 
 const LANGUAGES = [
   { code: 'en', label: 'EN' },
-  { code: 'fr', label: 'FR' },
+  { code: 'fr', label: 'FR' },/* 
   { code: 'ar', label: 'AR' },
-  { code: 'es', label: 'ES' },
+  { code: 'es', label: 'ES' }, */
 ];
 
 const NAV = [
@@ -40,7 +41,7 @@ export default function Layout() {
 
   return (
     <div className="app">
-      <span
+      {/* <span
         className="jimmy"
         onClick={() => navigateTo('/')}
         role="link"
@@ -48,37 +49,43 @@ export default function Layout() {
         aria-label={t('nav.home')}
         onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && navigateTo('/')}
       >
-        J
-      </span>
+        G
+      </span> */}
+      <JellyCursor />
 
       <nav className="nav" aria-label={t('nav.primary')}>
-        {NAV.map(({ path, key }) => (
-          <button
-            key={path}
-            type="button"
-            className={pathname === path ? 'nav-link active' : 'nav-link'}
-            aria-current={pathname === path ? 'page' : undefined}
-            onClick={() => navigateTo(path)}
-          >
-            {t(key)}
-          </button>
-        ))}
-
-        <span className="lang-switcher" aria-label={t('language')}>
-          {LANGUAGES.map(({ code, label }) => (
+        <div className='ghitz'>ghitzcare</div>
+        <div className='middle'>
+          {NAV.map(({ path, key }) => (
             <button
-              key={code}
+              key={path}
               type="button"
-              className={`lang-btn${i18n.language === code ? ' lang-btn--active' : ''}`}
-              onClick={() => changeLanguage(code)}
-              aria-pressed={i18n.language === code}
+              className={pathname === path ? 'nav-link active' : 'nav-link'}
+              aria-current={pathname === path ? 'page' : undefined}
+              onClick={() => navigateTo(path)}
             >
-              {label}
+              {t(key)}
             </button>
           ))}
-        </span>
-      </nav>
 
+         {/*  <span className="lang-switcher" aria-label={t('language')}>
+            {LANGUAGES.map(({ code, label }) => (
+              <button
+                key={code}
+                type="button"
+                className={`lang-btn${i18n.language === code ? ' lang-btn--active' : ''}`}
+                onClick={() => changeLanguage(code)}
+                aria-pressed={i18n.language === code}
+              >
+                {label}
+              </button>
+            ))}
+          </span> */}
+
+        </div>
+
+        <button className='order'>{t("order")}</button>
+      </nav>
       <main className="main"><Outlet /></main>
     </div>
   );

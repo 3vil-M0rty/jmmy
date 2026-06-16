@@ -30,7 +30,7 @@
 /* ---- Kinetic title card ------------------------------------------ */
 .overlay {
   position: absolute;
-  left: clamp(1.5rem, 5vw, 5rem);
+  right: clamp(1.5rem, 5vw, 5rem);
   bottom: clamp(1.5rem, 6vh, 4.5rem);
   z-index: 80;
   pointer-events: none;

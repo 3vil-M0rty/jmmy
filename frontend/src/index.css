@@ -5,11 +5,12 @@
 /* Fonts are loaded via a preconnected <link> in index.html (faster than @import). */
 
 :root {
-  --background-color: rgb(0, 0, 0);
-  --text-color: white;
+  --background-color: rgb(255, 255, 255);
+  --text-color: rgb(0, 0, 0);
   --muted-text: gray;
   --bodoni-moda: "Bodoni Moda SC", serif;
   --font-body: "Inter Tight", sans-serif;
+  --allura: "Allura", cursive;
 
 }
 
@@ -46,6 +47,25 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -ms-overflow-style: none;
+}
+html, body, a, [role=button], button, [type=button]:not(:disabled) {
+  cursor: none;
+}
+
+#jelly-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  mix-blend-mode: difference;
+  border-radius: 50%;
+  transform-origin: 50% 50%;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  z-index: 99999;
+  pointer-events: none;
 }
 
 img,

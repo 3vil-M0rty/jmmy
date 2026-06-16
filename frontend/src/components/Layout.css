@@ -1,40 +1,54 @@
-.jimmy {
-    position: fixed;
-    top: 15px;
-    inset-inline-start: 50px;
-    font-size: 7rem;
-    z-index: 9999;
-    user-select: none;
-    cursor: pointer;
-    line-height: 1;
-    display: inline-block;
-    width: fit-content;
-    mix-blend-mode: difference;
-    font-family: var(--bodoni-moda);
-    outline: none;
+.ghitz {
+    color: white;
+    font-family: var(--allura);
+    font-size: 2rem;
 }
 
 .nav {
     position: fixed;
     top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
     inset-inline-end: 24px;
     z-index: 9999;
+    width: 90vw;
+    border-bottom: 1px solid rgb(255, 255, 255);
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    padding: 40px 15px;
     align-items: center;
     gap: 18px;
     font-family: var(--font-body);
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
+    backdrop-filter: blur(2px);
 }
+
+
+.middle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+.order {
+    padding: 15px;
+    border: 1px solid white;
+    width: 140px;
+    color: white;
+    font-size: 0.75rem;
+}
+
+
 
 .nav .nav-link {
     position: relative;
     display: inline-block;
-    color: #000000;
+    color: #ffffff;
     line-height: 1;
-    mix-blend-mode: difference;
     padding-bottom: 3px;
 }
 
@@ -68,7 +82,7 @@
 
 .lang-btn {
     color: #fff;
-    font-size: 0.72rem;
+    font-size: 0.62rem;
     letter-spacing: 0.06em;
     opacity: 0.55;
     line-height: 1;
