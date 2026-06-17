@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useTransition } from './TransitionContext';
 import './Layout.css';
 import JellyCursor from './JellyCursor';
+import GooeyButton from "./GooeyButton"
 
 const LANGUAGES = [
   { code: 'en', label: 'EN' },
@@ -14,7 +15,7 @@ const LANGUAGES = [
 
 const NAV = [
   { path: '/', key: 'nav.home' },
-  { path: '/', key: 'nav.work' },
+  { path: '/work', key: 'nav.discover' },
   { path: '/', key: 'nav.users' },
 ];
 

@@ -2,10 +2,10 @@
    CSS RESET
    ========================= */
 
-/* Fonts are loaded via a preconnected <link> in index.html (faster than @import). */
+/* Fonts are loaded via a preconnected <.link> in index.html (faster than @import). */
 
 :root {
-  --background-color: rgb(255, 255, 255);
+  --background-color: #ffffff;
   --text-color: rgb(0, 0, 0);
   --muted-text: gray;
   --bodoni-moda: "Bodoni Moda SC", serif;
@@ -109,4 +109,62 @@ table {
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+
+.link {
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+  font-size: 1.2rem;
+}
+
+.link::before,
+.link::after {
+ content: '';
+  position: absolute;
+  width: 100%;
+  left: 0;
+}
+.link::before {
+  background-color: #ffffff;
+  height: 2px;
+  bottom: 0;
+  transform-origin: 100% 50%;
+  transform: scaleX(0);
+  transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.link::after {
+  content: attr(data-replace);
+  height: 100%;
+  top: 0;
+  transform-origin: 100% 50%;
+  transform: translate3d(200%, 0, 0);
+  transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
+  color: #ffffff;
+}
+
+.link:hover::before {
+  transform-origin: 0% 50%;
+  transform: scaleX(1);
+}
+.link:hover::after {
+  transform: translate3d(0, 0, 0);
+}
+
+.link span {
+  display: inline-block;
+  transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.link:hover span {
+  transform: translate3d(-200%, 0, 0);
+}
+
+
+.link {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 700;
+  vertical-align: top;
 }

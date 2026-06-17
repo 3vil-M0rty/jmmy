@@ -5,6 +5,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./HomePage.module.css";
 import Seo from "../components/Seo";
 import ParticleDepthGallery from "../components/ParticleDepthGallery";
+import GooeyButton from "../components/GooeyButton";
+import OilyBlob from "../components/OilyBlob";
 
 gsap.registerPlugin(ScrollTrigger);
 const CLOUD_NAME = "dfolcjrpf";
@@ -16,7 +18,7 @@ export default function HomePage() {
     const { t } = useTranslation();
 
     const bgRef = useRef(null);
-    const bgMobileRef = useRef(null);   // add this
+    const bgMobileRef = useRef(null);
 
     const lndRef = useRef(null);
     const wavePanelRef = useRef(null);
@@ -69,23 +71,25 @@ export default function HomePage() {
     ];
 
     useLayoutEffect(() => {
-        if (!lndRef.current || !bgRef.current) return;
+        if (!lndRef.current) return;
         const bgEls = [bgRef.current, bgMobileRef.current].filter(Boolean);
 
         gsap.set(lndRef.current, { opacity: 1 });
-        gsap.set(bgEls.current, { yPercent: 0 });
+        if (bgEls.length) gsap.set(bgEls, { yPercent: 0 });
 
         const ctx = gsap.context(() => {
-            gsap.to(bgEls.current, {
-                yPercent: -20,
-                ease: "none",
-                scrollTrigger: {
-                    trigger: lndRef.current,
-                    start: "top top",
-                    end: "bottom top",
-                    scrub: true,
-                },
-            });
+            if (bgEls.length) {
+                gsap.to(bgEls, {
+                    yPercent: -20,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: lndRef.current,
+                        start: "top top",
+                        end: "bottom top",
+                        scrub: true,
+                    },
+                });
+            }
 
             gsap.to(lndRef.current, {
                 opacity: 0,
@@ -98,13 +102,15 @@ export default function HomePage() {
                 },
             });
 
-            gsap.to(wavePanelRef.current, {
-                y: -25,
-                duration: 5,
-                repeat: -1,
-                yoyo: true,
-                ease: "sine.inOut",
-            });
+            if (wavePanelRef.current) {
+                gsap.to(wavePanelRef.current, {
+                    y: -25,
+                    duration: 5,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut",
+                });
+            }
 
             requestAnimationFrame(() => ScrollTrigger.refresh());
         });
@@ -120,84 +126,27 @@ export default function HomePage() {
             />
 
             <div className={styles.landing} ref={lndRef}>
-                <video
-                    ref={bgRef}
-                    className={styles.bg}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                >
-                    <source src="/videos/back.mp4" type="video/mp4" />
-                </video>
-                <video ref={bgMobileRef} className={styles.bgMobile} autoPlay muted loop playsInline>
-                    {/* TODO: replace with your real vertical clip */}
-                    <source src="https://cdn.pixabay.com/video/2025/01/09/251589_large.mp4" type="video/mp4" />
-                </video>
-
-                {/* <div className={styles.overlay} />
-
-                <div
-                    ref={wavePanelRef}
-                    className={styles.wavePanel}
-                >
-                    <svg
-                        className={styles.waveSvg}
-                        viewBox="0 0 1000 1000"
-                        preserveAspectRatio="none"
-                    >
-                        <path
-                            d="
-                                M400 0
-                                C650 150 450 350 760 500
-                                C980 650 820 850 1000 1000
-                                L1000 0
-                                Z
-                            "
-                        />
-                    </svg>
-
-                    <div className={styles.panelContent}>
-                        <span>ARGAN & OUD</span>
-
-                        <h2>
-                            Own Your
-                            <br />
-                            Mystery
-                        </h2>
-                    </div>
-                </div> */}
-
-                {/* <div className={styles.hero}>
-                    <p className={styles.eyebrow}>
-                        THE ART OF AN UNFORGETTABLE PRESENCE
-                    </p>
-
-                    <h1 className={styles.title}>
-                        Soft Yet
-                        <br />
-                        Powerful
-                    </h1>
-
-                    <p className={styles.subtitle}>
-                        Mysterious. Radiant.
-                        <br />
-                        Unforgettable.
-                    </p>
-                </div> */}
+                <h1 className={styles.brandText} aria-hidden="true">
+                    G
+                </h1>
+                <OilyBlob
+                    className={styles.blob}
+                    color="#f83a83"        // orb tint
+                    dropletColor="#f83a83" // dragged droplets (defaults to color if omitted)
+                    opacity={1}          // 0 = clear, 1 = solid. lower = more text shows through
+                    orbScale={0.4}           // 1.3 = bigger orb, 0.8 = smaller
+                    dropletScale={0.3}       // 1.6 = fatter droplets, 0.6 = tiny beads
+                    gooeyness={0.3}        // 0.8 = long stringy sticky neck, 0.3 = snaps off quickly
+                />
             </div>
 
-            {/* <section className={styles.next}>
-                <h2 className={styles.sectionTitle}>
-                    Signature Scent
-                </h2>
-
-                <p className={styles.sectionBody}>
-                    Inspired by the heritage of Eastern perfumery,
-                    crafted with precious Argan Oil and rare Oud.
-                </p>
-            </section>
-
+            {/* <div style={{ width: "100%", height: "100vh" }}>
+                <ParticleDepthGallery
+                    items={items}
+                    pointerForce={0}
+                    tilt={0.02}
+                />
+            </div> */}
             <section className={styles.next}>
                 <h2 className={styles.sectionTitle}>
                     Shine & Fragrance
@@ -208,21 +157,6 @@ export default function HomePage() {
                     leaves a captivating scent that lingers all day.
                 </p>
             </section>
-
-            <div style={{ width: "100%", height: "100vh" }}>
-                <ParticleDepthGallery
-                    items={items}
-                    pointerForce={0}
-                    tilt={0.02}
-                />
-            </div> */}
-            <div style={{ width: "100%", height: "100vh" }}>
-                <ParticleDepthGallery
-                    items={items}
-                    pointerForce={0}
-                    tilt={0.02}
-                />
-            </div>
         </div>
     );
 }
