@@ -132,7 +132,7 @@ export default function HomePage() {
                 </video>
                 <video ref={bgMobileRef} className={styles.bgMobile} autoPlay muted loop playsInline>
                     {/* TODO: replace with your real vertical clip */}
-                    <source src="/videos/back-vertical.mp4" type="video/mp4" />
+                    <source src="https://cdn.pixabay.com/video/2025/01/09/251589_large.mp4" type="video/mp4" />
                 </video>
 
                 {/* <div className={styles.overlay} />

@@ -3,22 +3,16 @@ import * as THREE from 'three'
 import styles from './ParticleDepthGallery.module.css'
 
 /**
- * MOTE — a volumetric image-dust gallery
+ * Scroll-driven depth gallery.
  * -------------------------------------------------------------------------
- * An original reinterpretation of a scroll-driven depth gallery.
+ * Crisp image planes laid out in depth; scrolling flies the camera through
+ * them, crossfading by focus. A domain-warped "liquid light" background
+ * shader blends its palette from whichever images are in focus, and the
+ * whole field tilts with the pointer for parallax.
  *
- * Every image is dissolved into a GPU point-cloud. When an image moves into
- * focus, its motes assemble into the picture; as you scroll past, they scatter
- * into a drifting, turbulent cloud receding through depth. Scroll velocity
- * blows the dust apart, the cursor acts as a repulsion well, the field tilts
- * with the pointer for parallax, and a domain-warped "liquid light" shader
- * paints the background from each image's palette.
- *
- * Renders ONLY the experience (canvas + optional kinetic label). No chrome.
- *
- * Each item (flat fields or a nested `label` object):
+ * Each item:
  *   {
- *     image:        '/img.webp',   // sampled into motes (required for picture)
+ *     image:        '/img.webp',
  *     word:         'golden',      // caption word
  *     pms:          'PMS 135 C',   // caption code
  *     accentColor:  '#feca4f',     // swatch + CMYK/RGB/HEX
@@ -29,9 +23,7 @@ import styles from './ParticleDepthGallery.module.css'
  *     position:     { x: -0.9, y: 0 },
  *   }
  *
- * Props: items, className, style, planeGap, density, scatter, pointerForce,
- *        pointSize, tilt, showLabels, invertScroll.
- *
+ * Props: items, className, style, planeGap, tilt, showLabels, invertScroll.
  * The parent element must have a height. Requires `three`.
  */
 
@@ -39,89 +31,8 @@ import styles from './ParticleDepthGallery.module.css'
 THREE.ColorManagement.enabled = false
 
 /* ============================================================ *
- * Shaders
+ * Background shader
  * ============================================================ */
-const PARTICLE_VERTEX = /* glsl */ `
-  attribute vec2 aUv;
-  attribute vec3 aSeed;
-
-  uniform sampler2D uTexture;
-  uniform float uHasTexture;
-  uniform vec2 uPlaneSize;
-  uniform float uFocus;
-  uniform float uTime;
-  uniform float uScatter;
-  uniform float uVelocity;
-  uniform vec2 uPointer;
-  uniform float uPointerForce;
-  uniform float uPointSize;
-  uniform float uPixelRatio;
-  uniform vec3 uTint;
-
-  varying vec3 vColor;
-  varying float vAlpha;
-
-  void main() {
-    // Assembled position: flat, centered image in local space.
-    vec3 formed = vec3((aUv - 0.5) * uPlaneSize, 0.0);
-
-    float scatter = 1.0 - uFocus;            // 0 formed -> 1 dispersed
-    float scatterEase = scatter * scatter;   // hold form longer, then burst
-
-    // Dispersion direction from per-mote seed.
-    vec3 dir = normalize(aSeed * 2.0 - 1.0 + 0.0001);
-    float radius = uScatter * (0.45 + aSeed.x);
-    float blast = scatterEase * radius + abs(uVelocity) * 0.9 * scatterEase;
-    vec3 drift = dir * blast;
-
-    // Slow turbulence so the cloud never sits still.
-    float t = uTime * 0.0006;
-    drift.x += sin(t + aSeed.y * 6.2831) * 0.18 * scatter;
-    drift.y += cos(t * 1.3 + aSeed.z * 6.2831) * 0.18 * scatter;
-    drift.z += sin(t * 0.7 + aSeed.x * 6.2831) * 0.8 * scatter;
-
-    vec3 pos = formed + drift;
-
-    // Cursor repulsion well (in local plane space, stronger while dispersed).
-    vec2 pointerLocal = uPointer * (uPlaneSize * 0.5);
-    vec2 toPointer = pos.xy - pointerLocal;
-    float d = length(toPointer);
-    float well = smoothstep(1.3, 0.0, d) * uPointerForce * (0.25 + scatter);
-    pos.xy += normalize(toPointer + 0.0001) * well;
-
-    vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-    gl_Position = projectionMatrix * mvPosition;
-
-    vec3 texColor = uHasTexture > 0.5 ? texture2D(uTexture, aUv).rgb : uTint;
-    // Scattered dust drifts toward the tint; near-formed dust keeps true color.
-    vColor = mix(texColor, uTint, scatterEase * 0.5);
-
-    // Dust is invisible while the image is formed (the crisp plane shows then),
-    // bursts as it leaves focus, and settles into faint haze far away.
-    float ramp = smoothstep(0.9, 0.55, uFocus);            // 0 at focus, 1 once dispersing
-    float settle = mix(0.55, 0.08, smoothstep(0.5, 1.0, scatter)); // bright burst -> faint haze
-    vAlpha = clamp(ramp * settle, 0.0, 1.0);
-
-    float size = uPointSize * (0.7 + scatter * 0.6);
-    size *= uPixelRatio;
-    gl_PointSize = clamp(size * (5.0 / -mvPosition.z), 0.5, 80.0);
-  }
-`
-
-const PARTICLE_FRAGMENT = /* glsl */ `
-  precision highp float;
-  varying vec3 vColor;
-  varying float vAlpha;
-
-  void main() {
-    vec2 c = gl_PointCoord - 0.5;
-    float dist = length(c);
-    float mask = smoothstep(0.5, 0.32, dist);
-    if (mask <= 0.001) discard;
-    gl_FragColor = vec4(vColor, vAlpha * mask);
-  }
-`
-
 const BG_VERTEX = /* glsl */ `
   varying vec2 vUv;
   void main() {
@@ -266,10 +177,6 @@ class Background {
     this.isInitialized = true
   }
 
-  setAspect() {
-    // Aspect-independent gradient; kept for API compatibility.
-  }
-
   setTargetPalette(a, b, c) {
     if (a) this.targetBackground.copy(a)
     if (b) this.targetBlob1.copy(b)
@@ -341,15 +248,11 @@ class Background {
 }
 
 /* ============================================================ *
- * MoteField (one image -> point cloud)
+ * ImageField (one image -> crisp depth plane)
  * ============================================================ */
-class MoteField {
-  constructor(config, options) {
+class ImageField {
+  constructor(config) {
     this.config = config
-    this.options = options
-    this.points = null
-    this.geometry = null
-    this.material = null
     this.focus = 0
     this.colors = {
       background: new THREE.Color(config.backgroundColor),
@@ -358,7 +261,7 @@ class MoteField {
     }
   }
 
-  build(texture, index, pixelRatio) {
+  build(texture) {
     const image = texture?.image
     const aspect = image && image.width > 0 && image.height > 0 ? image.width / image.height : 1
     this.aspect = aspect
@@ -369,7 +272,6 @@ class MoteField {
 
     this.group = new THREE.Group()
 
-    // Crisp image plane — what you actually see while in focus.
     this.planeGeometry = new THREE.PlaneGeometry(planeSize.x, planeSize.y)
     this.planeMaterial = new THREE.MeshBasicMaterial({
       map: texture || null,
@@ -384,94 +286,16 @@ class MoteField {
     this.plane.renderOrder = 0
     this.group.add(this.plane)
 
-    // Mote cloud — the dissolve. Optional; off by default.
-    this.hasDust = Boolean(this.options.enableDust)
-    if (this.hasDust) {
-      const density = this.options.density
-      const cols = Math.max(2, Math.round(Math.sqrt(density * aspect)))
-      const rows = Math.max(2, Math.round(density / cols))
-      const count = cols * rows
-
-      const positions = new Float32Array(count * 3) // unused; computed in shader
-      const uvs = new Float32Array(count * 2)
-      const seeds = new Float32Array(count * 3)
-
-      let i = 0
-      for (let y = 0; y < rows; y += 1) {
-        for (let x = 0; x < cols; x += 1) {
-          uvs[i * 2] = (x + 0.5) / cols
-          uvs[i * 2 + 1] = (y + 0.5) / rows
-          seeds[i * 3] = Math.random()
-          seeds[i * 3 + 1] = Math.random()
-          seeds[i * 3 + 2] = Math.random()
-          i += 1
-        }
-      }
-
-      this.geometry = new THREE.BufferGeometry()
-      this.geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-      this.geometry.setAttribute('aUv', new THREE.BufferAttribute(uvs, 2))
-      this.geometry.setAttribute('aSeed', new THREE.BufferAttribute(seeds, 3))
-
-      this.material = new THREE.ShaderMaterial({
-        vertexShader: PARTICLE_VERTEX,
-        fragmentShader: PARTICLE_FRAGMENT,
-        transparent: true,
-        depthWrite: false,
-        depthTest: false,
-        blending: THREE.NormalBlending,
-        uniforms: {
-          uTexture: { value: texture || null },
-          uHasTexture: { value: texture ? 1 : 0 },
-          uPlaneSize: { value: planeSize },
-          uFocus: { value: 0 },
-          uTime: { value: 0 },
-          uScatter: { value: this.options.scatter },
-          uVelocity: { value: 0 },
-          uPointer: { value: new THREE.Vector2(0, 0) },
-          uPointerForce: { value: this.options.pointerForce },
-          uPointSize: { value: this.options.pointSize },
-          uPixelRatio: { value: pixelRatio },
-          uTint: { value: new THREE.Color(this.config.tint) },
-        },
-      })
-
-      this.points = new THREE.Points(this.geometry, this.material)
-      this.points.frustumCulled = false
-      this.points.renderOrder = 1
-      this.group.add(this.points)
-    }
-
     return this.group
   }
 
   setFocus(focus) {
     this.focus = focus
-    if (this.material) this.material.uniforms.uFocus.value = focus
-    if (this.planeMaterial) {
-      // With dust: hard handoff so motes cover the transition.
-      // Without dust: clean depth crossfade between images.
-      this.planeMaterial.opacity = this.hasDust
-        ? THREE.MathUtils.smoothstep(focus, 0.5, 0.92)
-        : focus
-    }
-  }
-
-  setTime(time) {
-    if (this.material) this.material.uniforms.uTime.value = time
-  }
-
-  setVelocity(v) {
-    if (this.material) this.material.uniforms.uVelocity.value = v
-  }
-
-  setPointer(x, y) {
-    if (this.material) this.material.uniforms.uPointer.value.set(x, y)
+    // Clean depth crossfade between images.
+    if (this.planeMaterial) this.planeMaterial.opacity = focus
   }
 
   dispose() {
-    this.geometry?.dispose()
-    this.material?.dispose()
     this.planeGeometry?.dispose()
     this.planeMaterial?.dispose()
   }
@@ -500,11 +324,11 @@ class Gallery {
     return window.innerWidth <= this.mobileBreakpoint ? this.mobileXSpreadFactor : 1
   }
 
-  init(scene, pixelRatio) {
+  init(scene) {
     this.planeConfig.forEach((config, index) => {
-      const field = new MoteField(config, this.options)
+      const field = new ImageField(config)
       const texture = this.texturesBySource.get(config.textureSrc) || null
-      const object = field.build(texture, index, pixelRatio)
+      const object = field.build(texture)
       this.layoutField(object, index)
       this.group.add(object)
       this.fields.push(field)
@@ -556,12 +380,10 @@ class Gallery {
     return best
   }
 
-  update(camera, scroll, time, pointer) {
+  update(camera, pointer) {
     const focusRange = Math.max(this.planeGap * 1.05, 2)
-    const velocityMax = Math.max(scroll?.velocityMax || 1, 0.0001)
-    const velocity = THREE.MathUtils.clamp((scroll?.velocity || 0) / velocityMax, -1, 1)
 
-    // Per-field focus + uniforms.
+    // Per-field focus.
     this.fields.forEach((field) => {
       const viewZ = field.group.position.z + this.viewOffset
       const distance = Math.abs(camera.position.z - viewZ)
@@ -571,9 +393,6 @@ class Gallery {
         1
       )
       field.setFocus(focus)
-      field.setTime(time)
-      field.setVelocity(velocity)
-      field.setPointer(pointer.x, pointer.y)
     })
 
     // Pointer-driven parallax tilt of the whole field.
@@ -679,7 +498,7 @@ class Label {
     if (this.refs.pms) this.refs.pms.textContent = cmyk ? (label.pms || 'N/A') : 'N/A'
     if (this.refs.overlay) this.refs.overlay.style.color = label.color || ''
 
-    // Retrigger the enter animation.
+    // Retrigger the enter animation (this is what redraws the rule line).
     if (this.refs.overlay && this.refs.enterClass) {
       this.refs.overlay.classList.remove(this.refs.enterClass)
       void this.refs.overlay.offsetWidth
@@ -753,8 +572,9 @@ class Scroll {
       this.touchY = y
       if (this.shouldReleaseToPage(delta)) {
         // The canvas uses `touch-action: none`, so the browser won't scroll the
-        // page itself for this gesture. Move it manually once the gallery has run
-        // out of depth in this direction (this is what lets you reach the top).
+        // page itself for this gesture. Drive it manually once the gallery has
+        // run out of depth in this direction — this is what lets you reach the
+        // top of the page again on touch devices.
         window.scrollBy(0, rawDelta)
         return
       }
@@ -897,7 +717,7 @@ class Engine {
     this.gallery.setPreloadedTextures(this.preloaded)
 
     this.background.init()
-    this.gallery.init(this.scene, this.renderer.getPixelRatio())
+    this.gallery.init(this.scene)
     this.label.init()
 
     this.scroll.init()
@@ -924,7 +744,6 @@ class Engine {
     this.camera.aspect = w / h
     this.camera.updateProjectionMatrix()
     this.renderer.setSize(w, h, false)
-    this.background.setAspect(w / h)
     this.gallery.relayout()
   }
 
@@ -956,7 +775,7 @@ class Engine {
 
     this.pointer.lerp(this.pointerTarget, 0.1)
     this.scroll.update()
-    this.gallery.update(this.camera, this.scroll, time, this.pointer)
+    this.gallery.update(this.camera, this.pointer)
     this.label.update()
 
     const velocityMax = Math.max(this.scroll.velocityMax, 0.0001)
@@ -1001,14 +820,9 @@ export default function ParticleDepthGallery({
   className = '',
   style,
   planeGap = 5,
-  density = 14000,
-  scatter = 2.6,
-  pointerForce = 0.55,
-  pointSize = 2.4,
   tilt = 0.12,
   showLabels = true,
   invertScroll = false,
-  enableDust = false,
 }) {
   const containerRef = useRef(null)
   const canvasRef = useRef(null)
@@ -1030,16 +844,16 @@ export default function ParticleDepthGallery({
     const normalized = normalizeItems(items)
     const labelRefs = showLabels
       ? {
-        overlay: overlayRef.current,
-        index: indexRef.current,
-        word: wordRef.current,
-        chip: chipRef.current,
-        cmyk: cmykRef.current,
-        rgb: rgbRef.current,
-        hex: hexRef.current,
-        pms: pmsRef.current,
-        enterClass: styles.enter,
-      }
+          overlay: overlayRef.current,
+          index: indexRef.current,
+          word: wordRef.current,
+          chip: chipRef.current,
+          cmyk: cmykRef.current,
+          rgb: rgbRef.current,
+          hex: hexRef.current,
+          pms: pmsRef.current,
+          enterClass: styles.enter,
+        }
       : null
 
     const engine = new Engine({
@@ -1047,7 +861,7 @@ export default function ParticleDepthGallery({
       container,
       items: normalized,
       labelRefs,
-      options: { planeGap, density, scatter, pointerForce, pointSize, tilt, invertScroll, enableDust },
+      options: { planeGap, tilt, invertScroll },
     })
 
     let disposed = false
@@ -1059,7 +873,7 @@ export default function ParticleDepthGallery({
       Promise.resolve().then(() => engine.dispose())
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items, planeGap, density, scatter, pointerForce, pointSize, tilt, showLabels, invertScroll, enableDust])
+  }, [items, planeGap, tilt, showLabels, invertScroll])
 
   return (
     <div ref={containerRef} className={`${styles.root} ${className}`} style={style}>
