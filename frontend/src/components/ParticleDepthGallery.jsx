@@ -544,6 +544,12 @@ class Scroll {
     this.velocityMax = 1.5
     this.velocityStopThreshold = 0.0001
 
+    // Fling momentum for when the gallery hands scrolling back to the page.
+    this.pageFlingVelocity = 0 // px per ms, from the last touch sample
+    this.lastTouchTime = 0
+    this.releasing = false
+    this.flingId = null
+
     this.firstPlaneViewOffset = 5
     this.lastPlaneViewOffset = 5
     this.minCameraZ = -Infinity
@@ -562,24 +568,59 @@ class Scroll {
       e.preventDefault()
       this.scrollTarget += delta
     }
+
     this.onTouchStart = (e) => {
+      if (this.flingId !== null) {
+        cancelAnimationFrame(this.flingId) // a new touch cancels any running fling
+        this.flingId = null
+      }
       this.touchY = e.touches[0]?.clientY ?? 0
+      this.lastTouchTime = performance.now()
+      this.pageFlingVelocity = 0
+      this.releasing = false
     }
+
     this.onTouchMove = (e) => {
       const y = e.touches[0]?.clientY ?? this.touchY
       const rawDelta = this.touchY - y
       const delta = rawDelta * this.touchScrollSpeed * (this.invertScroll ? -1 : 1)
       this.touchY = y
+
       if (this.shouldReleaseToPage(delta)) {
-        // The canvas uses `touch-action: none`, so the browser won't scroll the
-        // page itself for this gesture. Drive it manually once the gallery has
-        // run out of depth in this direction — this is what lets you reach the
-        // top of the page again on touch devices.
+        // Canvas uses `touch-action: none`, so the browser won't scroll the page
+        // itself. Move it 1:1 with the finger, and track velocity so we can
+        // replay native-feeling fling momentum once the finger lifts.
+        const now = performance.now()
+        const dt = Math.max(now - this.lastTouchTime, 1)
+        this.lastTouchTime = now
+        this.pageFlingVelocity = rawDelta / dt
+        this.releasing = true
         window.scrollBy(0, rawDelta)
         return
       }
+
+      this.releasing = false
       e.preventDefault()
       this.scrollTarget += delta
+    }
+
+    this.onTouchEnd = () => {
+      if (!this.releasing) return
+      this.releasing = false
+
+      let v = this.pageFlingVelocity * 16 // px/ms -> ~px per frame at 60fps
+      const decay = 0.94
+      const step = () => {
+        if (Math.abs(v) < 0.4) {
+          this.flingId = null
+          return
+        }
+        window.scrollBy(0, v) // clamps automatically at the page top/bottom
+        v *= decay
+        this.flingId = requestAnimationFrame(step)
+      }
+      if (this.flingId !== null) cancelAnimationFrame(this.flingId)
+      this.flingId = requestAnimationFrame(step)
     }
   }
 
@@ -617,6 +658,7 @@ class Scroll {
     this.target.addEventListener('wheel', this.onWheel, { passive: false })
     this.target.addEventListener('touchstart', this.onTouchStart, { passive: true })
     this.target.addEventListener('touchmove', this.onTouchMove, { passive: false })
+    this.target.addEventListener('touchend', this.onTouchEnd, { passive: true })
   }
 
   updateBounds() {
@@ -668,6 +710,8 @@ class Scroll {
     this.target.removeEventListener('wheel', this.onWheel)
     this.target.removeEventListener('touchstart', this.onTouchStart)
     this.target.removeEventListener('touchmove', this.onTouchMove)
+    this.target.removeEventListener('touchend', this.onTouchEnd)
+    if (this.flingId !== null) cancelAnimationFrame(this.flingId)
   }
 }
 
