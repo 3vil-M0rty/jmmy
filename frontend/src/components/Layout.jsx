@@ -14,8 +14,8 @@ const LANGUAGES = [
 
 const NAV = [
   { path: '/', key: 'nav.home' },
-  { path: '/work', key: 'nav.work' },
-  { path: '/users', key: 'nav.users' },
+  { path: '/', key: 'nav.work' },
+  { path: '/', key: 'nav.users' },
 ];
 
 export default function Layout() {
@@ -51,8 +51,6 @@ export default function Layout() {
       >
         G
       </span> */}
-      <JellyCursor />
-
       <nav className="nav" aria-label={t('nav.primary')}>
         <div className='ghitz'>ghitzcare</div>
         <div className='middle'>

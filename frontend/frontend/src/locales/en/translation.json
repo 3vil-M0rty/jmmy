@@ -11,11 +11,11 @@
   },
   "home": {
     "eyebrow": "Culture Collective",
-    "title": "Jimmy",
+    "title": "Ghitzcare",
     "subtitle": "DJs, streets, live bands, fashion and food — one immersive experience.",
     "cta": "View Users",
     "section1Title": "One night, every scene.",
-    "section1Body": "From basement DJ sets to packed live stages, Jimmy pulls the city's subcultures into a single room. Scroll through the worlds we move between.",
+    "section1Body": "From basement DJ sets to packed live stages, Ghitzcare pulls the city's subcultures into a single room. Scroll through the worlds we move between.",
     "section2Title": "Built around the people.",
     "section2Body": "Street style, kitchens and dancefloors — the collective is the crowd. Explore the gallery to feel the full picture."
   },
@@ -52,11 +52,11 @@
   "language": "Language",
   "footer": "Built with React, Vite & i18next",
   "seo": {
-    "siteName": "Jimmy",
+    "siteName": "Ghitzcare",
     "defaultDescription": "DJs, streets, live bands, fashion and food — one immersive culture collective.",
     "home": {
       "title": "Home",
-      "description": "Jimmy brings DJs, street life, live bands, fashion and food into one immersive experience."
+      "description": "Ghitzcare brings DJs, street life, live bands, fashion and food into one immersive experience."
     },
     "about": {
       "title": "About",
@@ -64,7 +64,7 @@
     },
     "users": {
       "title": "Users",
-      "description": "Browse the people behind the Jimmy collective."
+      "description": "Browse the people behind the Ghitzcare collective."
     },
     "notFound": {
       "title": "Page Not Found",

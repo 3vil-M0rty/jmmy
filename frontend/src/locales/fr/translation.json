@@ -16,7 +16,7 @@
     "subtitle": "Une signature silencieuse. Mystérieuse mais rayonnante. Inspiré de l'art intemporel de la parfumerie orientale, notre Élixir Gloss sublime vos cheveux d'une brillance lumineuse et d'un parfum inoubliable qui laisse son empreinte bien après votre passage.",
     "cta": "Voir les utilisateurs",
     "section1Title": "Une nuit, toutes les scènes.",
-    "section1Body": "Des sets de DJ en sous-sol aux scènes live bondées, Jimmy réunit les sous-cultures de la ville dans une même salle. Faites défiler les univers que nous traversons.",
+    "section1Body": "Des sets de DJ en sous-sol aux scènes live bondées, Ghitzcare réunit les sous-cultures de la ville dans une même salle. Faites défiler les univers que nous traversons.",
     "section2Title": "Construit autour des gens.",
     "section2Body": "Style de rue, cuisines et pistes de danse — le collectif, c'est la foule. Explorez la galerie pour ressentir l'ensemble."
   },
@@ -53,11 +53,11 @@
   "language": "Langue",
   "footer": "Construit avec React, Vite & i18next",
   "seo": {
-    "siteName": "Jimmy",
+    "siteName": "Ghitzcare",
     "defaultDescription": "DJs, rue, groupes live, mode et cuisine — un collectif culturel immersif.",
     "home": {
       "title": "Accueil",
-      "description": "Jimmy réunit DJs, vie de rue, groupes live, mode et cuisine dans une expérience immersive."
+      "description": "Ghitzcare réunit DJs, vie de rue, groupes live, mode et cuisine dans une expérience immersive."
     },
     "about": {
       "title": "À propos",
@@ -65,7 +65,7 @@
     },
     "users": {
       "title": "Utilisateurs",
-      "description": "Découvrez les personnes derrière le collectif Jimmy."
+      "description": "Découvrez les personnes derrière le collectif Ghitzcare."
     },
     "notFound": {
       "title": "Page introuvable",

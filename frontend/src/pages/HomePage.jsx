@@ -7,7 +7,11 @@ import Seo from "../components/Seo";
 import ParticleDepthGallery from "../components/ParticleDepthGallery";
 
 gsap.registerPlugin(ScrollTrigger);
+const CLOUD_NAME = "dfolcjrpf";
 
+function cloudinary(publicId, width = 1440) {
+    return `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto,w_${width}/${publicId}`;
+}
 export default function HomePage() {
     const { t } = useTranslation();
 
@@ -17,32 +21,21 @@ export default function HomePage() {
 
     const items = [
         {
-            image: "/images/hair01.png",
+            image: cloudinary("h2"),
             word: "Silent Signature",
             pms: "Argan & Oud",
             accentColor: "#4d613a",
             textColor: "#000000",
-            background: "#634e22",
-            blob1: "#7e623d",
-            blob2: "#f0bd82",
+            background: "rgb(163, 175, 138)",
+            blob1: "#d1ebcc",
+            blob2: "#96af8a",
             position: { x: -0.9, y: 0 },
         },
         {
-            image: "/images/hair02.png",
+            image: cloudinary("h01"),
             word: "Golden Radiance",
             pms: "Pure Argan Oil",
             accentColor: "#4f78fe",
-            textColor: "#2e2e2e",
-            background: "#fffaf0",
-            blob1: "#ca0000",
-            blob2: "#dbc8c8",
-            position: { x: -0.9, y: 0 },
-        },
-        {
-            image: "/images/hair03.png",
-            word: "Midnight Oud",
-            pms: "Sensual Fragrance",
-            accentColor: "#feca4f",
             textColor: "#2e2e2e",
             background: "#ff0000",
             blob1: "#d32828",
@@ -50,7 +43,18 @@ export default function HomePage() {
             position: { x: -0.9, y: 0 },
         },
         {
-            image: "/images/hair04.png",
+            image: cloudinary("h1"),
+            word: "Midnight Oud",
+            pms: "Sensual Fragrance",
+            accentColor: "#feca4f",
+            textColor: "#2e2e2e",
+            background: "#635d5d",
+            blob1: "#cebcbc",
+            blob2: "#f1e3e3",
+            position: { x: -0.9, y: 0 },
+        },
+        {
+            image: cloudinary("h02"),
             word: "Magnetic Aura",
             pms: "Lasting Impression",
             accentColor: "#4f78fe",
@@ -113,7 +117,16 @@ export default function HomePage() {
             />
 
             <div className={styles.landing} ref={lndRef}>
-                <div ref={bgRef} className={styles.bg} />
+                <video
+                    ref={bgRef}
+                    className={styles.bg}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                >
+                    <source src="/videos/back.mp4" type="video/mp4" />
+                </video>
 
                 {/* <div className={styles.overlay} />
 
@@ -202,7 +215,7 @@ export default function HomePage() {
                     pointerForce={0}
                     tilt={0.02}
                 />
-            </div> 
+            </div>
         </div>
     );
 }
