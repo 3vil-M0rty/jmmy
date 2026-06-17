@@ -748,9 +748,16 @@ class Scroll {
     }
     this.onTouchMove = (e) => {
       const y = e.touches[0]?.clientY ?? this.touchY
-      const delta = (this.touchY - y) * this.touchScrollSpeed * (this.invertScroll ? -1 : 1)
+      const rawDelta = this.touchY - y
+      const delta = rawDelta * this.touchScrollSpeed * (this.invertScroll ? -1 : 1)
       this.touchY = y
-      if (this.shouldReleaseToPage(delta)) return // let the page scroll past the gallery
+      if (this.shouldReleaseToPage(delta)) {
+        // The canvas uses `touch-action: none`, so the browser won't scroll the
+        // page itself for this gesture. Move it manually once the gallery has run
+        // out of depth in this direction (this is what lets you reach the top).
+        window.scrollBy(0, rawDelta)
+        return
+      }
       e.preventDefault()
       this.scrollTarget += delta
     }
@@ -1023,16 +1030,16 @@ export default function ParticleDepthGallery({
     const normalized = normalizeItems(items)
     const labelRefs = showLabels
       ? {
-          overlay: overlayRef.current,
-          index: indexRef.current,
-          word: wordRef.current,
-          chip: chipRef.current,
-          cmyk: cmykRef.current,
-          rgb: rgbRef.current,
-          hex: hexRef.current,
-          pms: pmsRef.current,
-          enterClass: styles.enter,
-        }
+        overlay: overlayRef.current,
+        index: indexRef.current,
+        word: wordRef.current,
+        chip: chipRef.current,
+        cmyk: cmykRef.current,
+        rgb: rgbRef.current,
+        hex: hexRef.current,
+        pms: pmsRef.current,
+        enterClass: styles.enter,
+      }
       : null
 
     const engine = new Engine({

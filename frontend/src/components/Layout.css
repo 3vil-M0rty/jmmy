@@ -115,3 +115,42 @@
         margin-inline-start: 2px;
     }
 }
+
+
+@media (max-width: 700px) {
+    .nav {
+        top: 10px;
+        width: 94vw;
+        padding: 14px;
+        gap: 10px;
+        font-size: 0.7rem;
+    }
+
+    .ghitz {
+        font-size: 1.4rem;
+    }
+
+    .middle {
+        gap: 16px;
+    }
+
+    .order {
+        width: auto;       /* was a fixed 140px */
+        padding: 10px 14px;
+        white-space: nowrap;
+        flex: none;
+    }
+
+    .lang-switcher {
+        gap: 4px;
+        padding-inline-start: 8px;
+        margin-inline-start: 2px;
+    }
+}
+
+/* very narrow phones: the center links are all placeholders (-> '/'),
+   so drop them to guarantee logo + order always fit */
+@media (max-width: 430px) {
+    .middle { display: none; }
+    .ghitz  { font-size: 1.25rem; }
+}

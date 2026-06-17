@@ -16,6 +16,8 @@ export default function HomePage() {
     const { t } = useTranslation();
 
     const bgRef = useRef(null);
+    const bgMobileRef = useRef(null);   // add this
+
     const lndRef = useRef(null);
     const wavePanelRef = useRef(null);
 
@@ -68,12 +70,13 @@ export default function HomePage() {
 
     useLayoutEffect(() => {
         if (!lndRef.current || !bgRef.current) return;
+        const bgEls = [bgRef.current, bgMobileRef.current].filter(Boolean);
 
         gsap.set(lndRef.current, { opacity: 1 });
-        gsap.set(bgRef.current, { yPercent: 0 });
+        gsap.set(bgEls.current, { yPercent: 0 });
 
         const ctx = gsap.context(() => {
-            gsap.to(bgRef.current, {
+            gsap.to(bgEls.current, {
                 yPercent: -20,
                 ease: "none",
                 scrollTrigger: {
@@ -126,6 +129,10 @@ export default function HomePage() {
                     playsInline
                 >
                     <source src="/videos/back.mp4" type="video/mp4" />
+                </video>
+                <video ref={bgMobileRef} className={styles.bgMobile} autoPlay muted loop playsInline>
+                    {/* TODO: replace with your real vertical clip */}
+                    <source src="/videos/back-vertical.mp4" type="video/mp4" />
                 </video>
 
                 {/* <div className={styles.overlay} />
