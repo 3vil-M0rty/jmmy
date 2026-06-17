@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTransition } from './TransitionContext';
 import './Layout.css';
@@ -23,6 +23,8 @@ export default function Layout() {
   const { t, i18n } = useTranslation();
   const { navigateTo } = useTransition();
   const { pathname } = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
+
 
   const changeLanguage = (code) => {
     i18n.changeLanguage(code);
@@ -67,7 +69,7 @@ export default function Layout() {
             </button>
           ))}
 
-         {/*  <span className="lang-switcher" aria-label={t('language')}>
+          {/*  <span className="lang-switcher" aria-label={t('language')}>
             {LANGUAGES.map(({ code, label }) => (
               <button
                 key={code}
@@ -84,7 +86,34 @@ export default function Layout() {
         </div>
 
         <button className='order'>{t("order")}</button>
+        <button
+          className="menu-toggle"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Menu"
+        >
+          ☰
+        </button>
       </nav>
+      {menuOpen && (
+        <div className="mobile-menu">
+          {NAV.map(({ path, key }) => (
+            <button
+              key={path}
+              className="mobile-link"
+              onClick={() => {
+                navigateTo(path);
+                setMenuOpen(false);
+              }}
+            >
+              {t(key)}
+            </button>
+          ))}
+
+          <button className="mobile-order">
+            {t("order")}
+          </button>
+        </div>
+      )}
       <main className="main"><Outlet /></main>
     </div>
   );
