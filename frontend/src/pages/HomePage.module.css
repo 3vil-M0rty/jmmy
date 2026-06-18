@@ -210,26 +210,10 @@
 }
 
 .brandText {
-    position: absolute;
-    inset: 0;
     z-index: 1;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: clamp(3rem, 15vw, 17rem);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    line-height: 1;
     text-align: center;
     user-select: none;
     pointer-events: none;
-    background: linear-gradient(180deg, #000000 0%, #000000 100%);
-    font-family: var(--allura);
-    font-weight: 100;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
 }
 
 .blob {

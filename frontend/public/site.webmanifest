@@ -1,13 +1,13 @@
 {
   "name": "Ghitzcare",
   "short_name": "Ghitzcare",
-  "description": "DJs, streets, live bands, fashion & food — one culture collective.",
+  "description": "Hair care oil product, argan and oud, beauty products",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#000000",
+  "background_color": "#fff",
+  "theme_color": "#fff",
   "icons": [
-    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
-    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+    { "src": "/icong.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/icong.svg", "sizes": "any", "type": "image/svg+xml" }
   ]
 }

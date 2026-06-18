@@ -1,215 +1,319 @@
+/* ─── Variables / reset ─────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+/* ─── Logo ──────────────────────────────────────────── */
 .ghitz {
-    color: black;
-    font-family: var(--allura);
-    font-size: 2rem;
+    cursor: pointer;
 }
 
+/* ─── Nav ───────────────────────────────────────────── */
 .nav {
-    position: fixed;
-    top: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-    inset-inline-end: 24px;
-    z-index: 9999;
-    width: 90vw;
-    border-bottom: 1px solid rgb(0, 0, 0);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 40px 15px;
-    align-items: center;
-    gap: 18px;
-    font-family: var(--font-body);
-    font-size: 0.75rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    backdrop-filter: blur(2px);
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  width: 90vw;
+  border-bottom: 1px solid rgb(0, 0, 0);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 15px;
+  gap: 18px;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  backdrop-filter: blur(2px);
 }
 
-
-.middle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 25px;
+/* Right cluster: order button + burger */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
+/* ─── Order button ──────────────────────────────────── */
 .order {
-    padding: 15px;
-    border: 1px solid black;
-    width: 140px;
-    color: black;
-    font-size: 0.75rem;
+  padding: 10px 20px;
+  border: 1px solid black;
+  color: black;
+  font-size: 0.75rem;
+  font-family: var(--font-body);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.order:hover {
+  background-color: black;
+  color: white;
+}
 
-
+/* ─── Nav links (desktop middle, unused but kept) ───── */
 .nav .nav-link {
-    position: relative;
-    display: inline-block;
-    color: #000;
-    line-height: 1;
-    padding-bottom: 3px;
+  position: relative;
+  display: inline-block;
+  color: #000;
+  line-height: 1;
+  padding-bottom: 3px;
+  cursor: pointer;
 }
 
 .nav .nav-link::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background: currentColor;
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 0.4s ease;
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.4s ease;
 }
 
 .nav .nav-link:hover::after,
 .nav .nav-link.active::after {
-    transform: scaleX(1);
+  transform: scaleX(1);
 }
 
-.lang-switcher {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-inline-start: 6px;
-    padding-inline-start: 14px;
-    border-inline-start: 1px solid rgba(255, 255, 255, 0.4);
-    mix-blend-mode: difference;
+/* ─── Burger button ─────────────────────────────────── */
+.burger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10001; /* above overlay AND nav */
+  position: relative;
+  color: black;
+  flex-shrink: 0;
 }
 
-.lang-btn {
-    color: #fff;
-    font-size: 0.62rem;
-    letter-spacing: 0.06em;
-    opacity: 0.55;
-    line-height: 1;
-    transition: opacity 0.3s ease;
+.burger__bar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: 2px;
+  transform-origin: center;
+  transition:
+    transform 0.35s ease,
+    opacity   0.25s ease,
+    width     0.35s ease;
 }
 
-.lang-btn:hover {
-    opacity: 0.85;
+/* When menu is open, burger turns white (sits on dark overlay) */
+.burger--open {
+  color: white;
 }
 
-.lang-btn--active {
-    opacity: 1;
-    font-weight: 700;
+.burger--open .burger__bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.burger--open .burger__bar:nth-child(2) {
+  opacity: 0;
+  width: 0;
+}
+.burger--open .burger__bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
+/* ─── Full-screen overlay (slides from top) ─────────── */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background-color: rgba(0, 0, 0, 0.5);
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.55s cubic-bezier(0.77, 0, 0.175, 1);
+  pointer-events: none;
+}
+
+.menu-overlay.is-open {
+  clip-path: inset(0 0 0% 0);
+  pointer-events: all;
+}
+
+/* ─── Menu panel ────────────────────────────────────── */
+.menu-content {
+  width: 100%;
+  height: 100%;
+  background-color: var(--colors-background, #0a0a0a);
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ─── Nav list ──────────────────────────────────────── */
+.menu-list {
+  list-style: none;
+  padding-left: clamp(1.5rem, 6vw, 5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.menu-list li {
+  overflow: hidden;
+}
+
+/* ─── Menu links ────────────────────────────────────── */
+.menu-link {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  display: inline-block;
+  cursor: pointer;
+  color: #fff;
+  padding-bottom: 4px;
+
+  /* Underline grow on hover */
+  position: relative;
+
+  transform: translateY(110%);
+  transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* Underline pseudo-element */
+.menu-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #fff;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.4s ease;
+}
+
+.menu-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Remove the webkit stroke on hover — underline is enough */
+.menu-link:hover {
+  color: #fff;
+}
+
+/* Staggered slide-in */
+.menu-list li:nth-child(1) .menu-link { transition-delay: 0.15s; }
+.menu-list li:nth-child(2) .menu-link { transition-delay: 0.22s; }
+.menu-list li:nth-child(3) .menu-link { transition-delay: 0.29s; }
+
+.menu-overlay.is-open .menu-link {
+  transform: translateY(0);
+}
+
+/* ─── Menu footer ───────────────────────────────────── */
+.menu-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: clamp(1rem, 4vw, 2.5rem);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ─── Language switcher inside menu ─────────────────── */
+.menu-lang {
+  display: flex;
+  gap: 12px;
+}
+
+.menu-lang__btn {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: color 0.3s ease;
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.menu-lang__btn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: white;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s ease;
+}
+
+.menu-lang__btn:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.menu-lang__btn:hover::after {
+  transform: scaleX(1);
+}
+
+.menu-lang__btn--active {
+  color: white;
+  font-weight: 700;
+}
+
+.menu-lang__btn--active::after {
+  transform: scaleX(1);
+}
+
+/* ─── Responsive ────────────────────────────────────── */
 @media (max-width: 700px) {
-    .jimmy {
-        font-size: 4.5rem;
-        inset-inline-start: 24px;
-    }
-    .nav {
-        top: 14px;
-        inset-inline-end: 16px;
-        gap: 12px;
-        font-size: 0.72rem;
-    }
-    .lang-switcher {
-        gap: 4px;
-        padding-inline-start: 8px;
-        margin-inline-start: 2px;
-    }
+  .nav {
+    top: 10px;
+    width: 94vw;
+    padding: 14px;
+    gap: 10px;
+    font-size: 0.7rem;
+  }
+
+  .ghitz {
+    font-size: 1.4rem;
+  }
+
+  .order {
+    padding: 8px 12px;
+    font-size: 0.7rem;
+  }
 }
 
-
-@media (max-width: 700px) {
-    .nav {
-        top: 10px;
-        width: 94vw;
-        padding: 14px;
-        gap: 10px;
-        font-size: 0.7rem;
-    }
-
-    .ghitz {
-        font-size: 1.4rem;
-    }
-
-    .middle {
-        gap: 16px;
-    }
-
-    .order {
-        width: auto;       /* was a fixed 140px */
-        padding: 10px 14px;
-        white-space: nowrap;
-        flex: none;
-    }
-
-    .lang-switcher {
-        gap: 4px;
-        padding-inline-start: 8px;
-        margin-inline-start: 2px;
-    }
-}
-
-/* very narrow phones: the center links are all placeholders (-> '/'),
-   so drop them to guarantee logo + order always fit */
 @media (max-width: 430px) {
-    .middle { display: none; }
-    .ghitz  { font-size: 1.25rem; }
-}
+  .ghitz {
+    font-size: 1.25rem;
+  }
 
-
-.menu-toggle {
+  .order {
     display: none;
-}
-
-@media (max-width: 700px) {
-
-    .middle {
-        display: none;
-    }
-
-    .order {
-        display: none;
-    }
-
-    .menu-toggle {
-        display: block;
-        font-size: 1.5rem;
-        color: black;
-        background: none;
-        border: none;
-        cursor: pointer;
-    }
-
-    .mobile-menu {
-        position: fixed;
-        top: 80px;
-        left: 0;
-        width: 100%;
-        background: white;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 30px 20px;
-        gap: 20px;
-        z-index: 9998;
-    }
-
-    .mobile-link,
-    .mobile-order {
-        font-size: 1rem;
-        text-transform: uppercase;
-        background: none;
-        border: none;
-        color: black;
-    }
-}
-
-.mobile-menu {
-    position: fixed;
-    inset: 0;
-    background: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
+  }
 }

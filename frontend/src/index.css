@@ -1,170 +1,189 @@
-/* =========================
-   CSS RESET
-   ========================= */
+  /* =========================
+    CSS RESET
+    ========================= */
 
-/* Fonts are loaded via a preconnected <.link> in index.html (faster than @import). */
+  /* Fonts are loaded via a preconnected <.link> in index.html (faster than @import). */
 
-:root {
-  --background-color: #ffffff;
-  --text-color: rgb(0, 0, 0);
-  --muted-text: gray;
-  --bodoni-moda: "Bodoni Moda SC", serif;
-  --font-body: "Inter Tight", sans-serif;
-  --allura: "Allura", cursive;
+  :root {
+    --background-color: #faf8f4;
+    --text-color: rgb(0, 0, 0);
+    --muted-text: gray;
+    --bodoni-moda: "Bodoni Moda SC", serif;
+    --font-body: "Inter Tight", sans-serif;
+    --allura: "Allura", cursive;
 
-}
+  }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
-* {
-  margin: 0;
-  padding: 0;
+  * {
+    margin: 0;
+    padding: 0;
 
-  /* Remove blue tap highlight on mobile */
-  -webkit-tap-highlight-color: transparent;
-}
+    /* Remove blue tap highlight on mobile */
+    -webkit-tap-highlight-color: transparent;
+  }
 
-html {
-  /* Prevent layout shift when scrollbar appears */
-
-
-  /* Smooth scrolling */
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  /* Better text rendering */
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
-  min-height: 100vh;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  line-height: 1.5;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -ms-overflow-style: none;
-}
+  html {
+    /* Prevent layout shift when scrollbar appears */
 
 
-#jelly-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 30px;
-  height: 30px;
-  background-color: #fff;
-  mix-blend-mode: difference;
-  border-radius: 50%;
-  transform-origin: 50% 50%;
-  transform: translate(-50%, -50%);
-  will-change: transform;
-  z-index: 99999;
-  pointer-events: none;
-}
+    /* Smooth scrolling */
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    /* Better text rendering */
+    -webkit-text-size-adjust: 100%;
+  }
 
-img,
-picture,
-video,
-canvas,
-svg {
-  display: block;
-  max-width: 100%;
-}
+  body {
+    min-height: 100vh;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.5;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -ms-overflow-style: none;
 
-input,
-button,
-textarea,
-select {
-  font: inherit;
-}
+    /* Grain overlay */
+    position: relative;
+  }
 
-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 99998;
+    /* just below jelly cursor (99999) */
+    pointer-events: none;
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px 200px;
+  }
 
-ul,
-ol {
-  list-style: none;
-}
+  #jelly-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    mix-blend-mode: difference;
+    border-radius: 50%;
+    transform-origin: 50% 50%;
+    transform: translate(-50%, -50%);
+    will-change: transform;
+    z-index: 99999;
+    pointer-events: none;
+  }
 
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
 
-#root {
-  isolation: isolate;
-}
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
 
-::-webkit-scrollbar {
-  display: none;
-}
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
 
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 
-.link {
-  overflow: hidden;
-  position: relative;
-  display: inline-block;
-  font-size: 1.2rem;
-}
+  ul,
+  ol {
+    list-style: none;
+  }
 
-.link::before,
-.link::after {
- content: '';
-  position: absolute;
-  width: 100%;
-  left: 0;
-}
-.link::before {
-  background-color: #ffffff;
-  height: 2px;
-  bottom: 0;
-  transform-origin: 100% 50%;
-  transform: scaleX(0);
-  transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
-}
-.link::after {
-  content: attr(data-replace);
-  height: 100%;
-  top: 0;
-  transform-origin: 100% 50%;
-  transform: translate3d(200%, 0, 0);
-  transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
-  color: #ffffff;
-}
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
 
-.link:hover::before {
-  transform-origin: 0% 50%;
-  transform: scaleX(1);
-}
-.link:hover::after {
-  transform: translate3d(0, 0, 0);
-}
+  #root {
+    isolation: isolate;
+  }
 
-.link span {
-  display: inline-block;
-  transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
-}
-
-.link:hover span {
-  transform: translate3d(-200%, 0, 0);
-}
+  ::-webkit-scrollbar {
+    display: none;
+  }
 
 
-.link {
-  text-decoration: none;
-  color: #ffffff;
-  font-weight: 700;
-  vertical-align: top;
-}
+  .link {
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    font-size: 1.2rem;
+  }
+
+  .link::before,
+  .link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    left: 0;
+  }
+
+  .link::before {
+    background-color: #ffffff;
+    height: 2px;
+    bottom: 0;
+    transform-origin: 100% 50%;
+    transform: scaleX(0);
+    transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .link::after {
+    content: attr(data-replace);
+    height: 100%;
+    top: 0;
+    transform-origin: 100% 50%;
+    transform: translate3d(200%, 0, 0);
+    transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
+    color: #ffffff;
+  }
+
+  .link:hover::before {
+    transform-origin: 0% 50%;
+    transform: scaleX(1);
+  }
+
+  .link:hover::after {
+    transform: translate3d(0, 0, 0);
+  }
+
+  .link span {
+    display: inline-block;
+    transition: transform .3s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .link:hover span {
+    transform: translate3d(-200%, 0, 0);
+  }
+
+
+  .link {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 700;
+    vertical-align: top;
+  }

@@ -7,6 +7,7 @@ import Seo from "../components/Seo";
 import ParticleDepthGallery from "../components/ParticleDepthGallery";
 import GooeyButton from "../components/GooeyButton";
 import OilyBlob from "../components/OilyBlob";
+import BrandIcon from "../components/Brandicon";
 
 gsap.registerPlugin(ScrollTrigger);
 const CLOUD_NAME = "dfolcjrpf";
@@ -126,15 +127,16 @@ export default function HomePage() {
             />
 
             <div className={styles.landing} ref={lndRef}>
-                <h1 className={styles.brandText} aria-hidden="true">
-                    G
-                </h1>
+
+                <BrandIcon size={320} color="#000" />
+
+
                 <OilyBlob
                     className={styles.blob}
-                    color="#f83a83"        // orb tint
-                    dropletColor="#f83a83" // dragged droplets (defaults to color if omitted)
+                    color="#eeff00"        // orb tint
+                    dropletColor="#eeff00" // dragged droplets (defaults to color if omitted)
                     opacity={1}          // 0 = clear, 1 = solid. lower = more text shows through
-                    orbScale={0.4}           // 1.3 = bigger orb, 0.8 = smaller
+                    orbScale={0.7}           // 1.3 = bigger orb, 0.8 = smaller
                     dropletScale={0.3}       // 1.6 = fatter droplets, 0.6 = tiny beads
                     gooeyness={0.3}        // 0.8 = long stringy sticky neck, 0.3 = snaps off quickly
                 />
